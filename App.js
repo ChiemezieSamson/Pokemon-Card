@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import PoKemonCard from './src/components/PoKemonCard';
+import pokemonProps from "./src/components/Data"
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {pokemonProps?.map(card => {
+          return (
+            <PoKemonCard key={card.id} {...card}/>
+          )
+        })}  
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#f5f5f5',
+    
+    ...Platform.select({
+      android: {
+        paddingTop: 25
+      },
+      default: {
+        paddingTop: 0
+      }
+    })
   },
 });
